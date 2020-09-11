@@ -6,18 +6,17 @@ const { expect } = chai;
 let proc;
 const exec = path.join(__dirname, '../..', 'index.js');
 
-
 describe('Команда date', () => {
-    before(() => {
-        process.chdir(__dirname);
-    });
+  before(() => {
+    process.chdir(__dirname);
+  });
 
-    beforeEach(() => {
-        proc = child.exec('node ' + exec);
-    });
+  beforeEach(() => {
+    proc = child.exec('node ' + exec);
+  });
 
-    it('должен показывать список todo после определенной даты', (done) => {
-        const result = `
+  it('должен показывать список todo после определенной даты', (done) => {
+    const result = `
   !  |  user      |  date        |  comment              |  fileName       
 ---------------------------------------------------------------------------
   !  |  Veronika  |  2016-12-25  |  С Наступающим 2017!  |  jsWithTodo.js  
@@ -26,18 +25,12 @@ describe('Команда date', () => {
 ---------------------------------------------------------------------------
 `.trim();
 
-        proc.stdout.once('data', function(){
-            proc.stdin.write('date 2016\r');
-            proc.stdout.once('data', function(output){
-                expect(output.toString('utf-8').trim()).to.eq(result);
-                done();
-            });
-        });
+    proc.stdout.once('data', function () {
+      proc.stdin.write('date 2016\r');
+      proc.stdout.once('data', function (output) {
+        expect(output.toString('utf-8').trim()).to.eq(result);
+        done();
+      });
     });
+  });
 });
-
-
-
-
-
-

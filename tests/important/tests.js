@@ -6,18 +6,17 @@ const { expect } = chai;
 let proc;
 const exec = path.join(__dirname, '../..', 'index.js');
 
-
 describe('Команда important', () => {
-    before(() => {
-        process.chdir(__dirname);
-    });
+  before(() => {
+    process.chdir(__dirname);
+  });
 
-    beforeEach(() => {
-        proc = child.exec('node ' + exec);
-    });
+  beforeEach(() => {
+    proc = child.exec('node ' + exec);
+  });
 
-    it('должен показывать список todo с восклицательными знаками', (done) => {
-        const result = `
+  it('должен показывать список todo с восклицательными знаками', (done) => {
+    const result = `
   !  |  user      |  date        |  comment              |  fileName       
 ---------------------------------------------------------------------------
   !  |            |              |  Hi!                  |  jsWithTodo.js  
@@ -26,18 +25,13 @@ describe('Команда important', () => {
 ---------------------------------------------------------------------------
 `.trim();
 
-        proc.stdout.once('data', function(){
-            proc.stdin.write('important\r');
-            proc.stdout.once('data', function(output){
-                expect(output.toString('utf-8').trim()).to.eq(result);
-                done();
-            });
-        });
+    proc.stdout.once('data', function () {
+      proc.stdin.write('important\r');
+      proc.stdout.once('data', function (output) {
+        // console.log(output.toString('utf-8').trim());
+        expect(output.toString('utf-8').trim()).to.eq(result);
+        done();
+      });
     });
+  });
 });
-
-
-
-
-
-
